@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pharmacies within 500 m of Kizilay</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+html,body,#map{height:100%;margin:0}
+.title{position:absolute;z-index:1000;top:10px;left:56px;background:rgba(255,255,255,.93);padding:6px 12px;border-radius:6px;
+font:600 15px system-ui,sans-serif;box-shadow:0 1px 4px rgba(0,0,0,.3)}
+.leaflet-popup-content table{border-collapse:collapse;font:12px system-ui,sans-serif}
+.leaflet-popup-content td{padding:2px 8px 2px 0;vertical-align:top}
+.leaflet-popup-content td:first-child{color:#555}
+</style></head>
+<body><div id="map"></div><div class="title">Pharmacies within 500 m of Kizilay</div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const LAYERS = [{"name":"500 m radius","color":"#64748b","value":null,"features":[{"type":"Feature","properties":{"n_features":1,"area_km2":0.7848},"geometry":{"type":"Polygon","coordinates":[[[32.859951,39.920807],[32.859924,39.920366],[32.85984,39.919928],[32.859702,39.919499],[32.859509,39.919083],[32.859264,39.918683],[32.85897,39.918303],[32.858629,39.917948],[32.858244,39.91762],[32.857819,39.917322],[32.857358,39.917058],[32.856866,39.91683],[32.856348,39.916641],[32.855807,39.916491],[32.855251,39.916383],[32.854683,39.916317],[32.85411,39.916295],[32.853536,39.916316],[32.852968,39.91638],[32.852411,39.916487],[32.85187,39.916635],[32.851351,39.916823],[32.850858,39.91705],[32.850396,39.917313],[32.84997,39.917609],[32.849584,39.917936],[32.849241,39.918291],[32.848945,39.91867],[32.848698,39.919069],[32.848504,39.919485],[32.848364,39.919914],[32.848278,39.920351],[32.848249,39.920792],[32.848276,39.921234],[32.84836,39.921672],[32.848498,39.922101],[32.848691,39.922517],[32.848935,39.922917],[32.84923,39.923297],[32.849571,39.923652],[32.849956,39.92398],[32.850381,39.924278],[32.850841,39.924542],[32.851333,39.92477],[32.851852,39.924959],[32.852392,39.925109],[32.852949,39.925217],[32.853517,39.925283],[32.85409,39.925305],[32.854664,39.925284],[32.855232,39.92522],[32.855789,39.925113],[32.85633,39.924965],[32.85685,39.924776],[32.857343,39.92455],[32.857805,39.924287],[32.858231,39.923991],[32.858617,39.923664],[32.85896,39.923309],[32.859256,39.92293],[32.859502,39.922531],[32.859696,39.922115],[32.859837,39.921686],[32.859922,39.921249],[32.859951,39.920807]]]}}]},{"name":"pharmacies (20)","color":"#e11d48","value":null,"features":[{"type":"Feature","properties":{"name":"Botanica","kind":"pharmacy","distance_m":109.5},"geometry":{"type":"Point","coordinates":[32.854846,39.921602]}},{"type":"Feature","properties":{"name":"Karakoyunlu Eczanesi","kind":"pharmacy","distance_m":241.3},"geometry":{"type":"Point","coordinates":[32.851752,39.919595]}},{"type":"Feature","properties":{"name":"Kumrular Eczanesi","kind":"pharmacy","distance_m":251},"geometry":{"type":"Point","coordinates":[32.851578,39.919644]}},{"type":"Feature","properties":{"name":"Yağmur Eczanesi","kind":"pharmacy","distance_m":268.3},"geometry":{"type":"Point","coordinates":[32.851235,39.919814]}},{"type":"Feature","properties":{"name":"Coşkun Eczanesi","kind":"pharmacy","distance_m":278.4},"geometry":{"type":"Point","coordinates":[32.851078,39.919865]}},{"type":"Feature","properties":{"name":"Tepe Eczanesi","kind":"pharmacy","distance_m":284.2},"geometry":{"type":"Point","coordinates":[32.852018,39.922795]}},{"type":"Feature","properties":{"name":"Şener Eczanesi","kind":"pharmacy","distance_m":297},"geometry":{"type":"Point","coordinates":[32.857573,39.920851]}},{"type":"Feature","properties":{"name":"Hatıra Eczanesi","kind":"pharmacy","distance_m":297.9},"geometry":{"type":"Point","coordinates":[32.850778,39.919991]}},{"type":"Feature","properties":{"name":"Uğrak","kind":"pharmacy","distance_m":339.7},"geometry":{"type":"Point","coordinates":[32.857648,39.922176]}},{"type":"Feature","properties":{"name":null,"kind":"pharmacy","distance_m":367.8},"geometry":{"type":"Point","coordinates":[32.856619,39.923485]}},{"type":"Feature","properties":{"name":"Namık Kemal Eczanesi","kind":"pharmacy","distance_m":371},"geometry":{"type":"Point","coordinates":[32.849952,39.921782]}},{"type":"Feature","properties":{"name":"Yeni Yunus Emre Eczanesi","kind":"pharmacy","distance_m":376.2},"geometry":{"type":"Point","coordinates":[32.849855,39.921695]}},{"type":"Feature","properties":{"name":"Bayındır Eczanesi","kind":"pharmacy","distance_m":382.5},"geometry":{"type":"Point","coordinates":[32.85613,39.92387]}},{"type":"Feature","properties":{"name":"Bora Eczanesi","kind":"pharmacy","distance_m":383.6},"geometry":{"type":"Point","coordinates":[32.849713,39.921523]}},{"type":"Feature","properties":{"name":"Varol Eczanesi","kind":"pharmacy","distance_m":392.8},"geometry":{"type":"Point","coordinates":[32.857173,39.91817]}},{"type":"Feature","properties":{"name":"Eceser Eczanesi","kind":"pharmacy","distance_m":397.5},"geometry":{"type":"Point","coordinates":[32.856006,39.924066]}},{"type":"Feature","properties":{"name":"Fazilet Eczanesi","kind":"pharmacy","distance_m":401.6},"geometry":{"type":"Point","coordinates":[32.858742,39.921354]}},{"type":"Feature","properties":{"name":"Büyük Ünal Eczanesi","kind":"pharmacy","distance_m":403.9},"geometry":{"type":"Point","coordinates":[32.85744,39.923372]}},{"type":"Feature","properties":{"name":"Durum Eczanesi","kind":"pharmacy","distance_m":478.8},"geometry":{"type":"Point","coordinates":[32.850464,39.92408]}},{"type":"Feature","properties":{"name":"Sağlık Eczanesi","kind":"pharmacy","distance_m":488.3},"geometry":{"type":"Point","coordinates":[32.856672,39.924727]}}]}];
+const map = L.map('map');
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+  {maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
+function popup(props){
+  const t = document.createElement('table');
+  Object.entries(props || {}).slice(0, 30).forEach(([k, v]) => {
+    const r = t.insertRow(); r.insertCell().textContent = k; r.insertCell().textContent = (v === null ? '' : String(v));
+  });
+  return t;
+}
+const overlays = {}; let bounds = null;
+LAYERS.forEach(l => {
+  let lo = Infinity, hi = -Infinity;
+  if (l.value) l.features.forEach(f => { const v = f.properties && f.properties[l.value]; if (typeof v === 'number') { lo = Math.min(lo, v); hi = Math.max(hi, v); } });
+  const ramp = ['#ffffcc', '#ffeda0', '#fed976', '#feb24c', '#fd8d3c', '#fc4e2a', '#e31a1c', '#b10026'];
+  const fillFor = f => {
+    const v = l.value && f.properties ? f.properties[l.value] : null;
+    if (typeof v !== 'number' || !isFinite(lo)) return l.color;
+    return ramp[Math.min(ramp.length - 1, Math.floor((v - lo) / ((hi - lo) || 1) * ramp.length))];
+  };
+  const style = f => ({color: l.value ? '#555' : l.color, weight: l.value ? 1 : 2, fillColor: fillFor(f), fillOpacity: l.value ? 0.75 : 0.3});
+  const gj = L.geoJSON({type: 'FeatureCollection', features: l.features}, {
+    style: style,
+    pointToLayer: (f, ll) => L.circleMarker(ll, {radius: 6, color: '#fff', weight: 1.5, fillColor: fillFor(f), fillOpacity: 0.95}),
+    onEachFeature: (f, lyr) => { if (f.properties && Object.keys(f.properties).length) lyr.bindPopup(() => popup(f.properties), {maxHeight: 260}); }
+  }).addTo(map);
+  overlays[l.name + ' (' + l.features.length + ')'] = gj;
+  const b = gj.getBounds(); if (b.isValid()) bounds = bounds ? bounds.extend(b) : b;
+});
+if (LAYERS.length > 1) L.control.layers(null, overlays, {collapsed: false}).addTo(map);
+if (bounds) map.fitBounds(bounds.pad(0.08)); else map.setView([0, 0], 2);
+</script></body></html>

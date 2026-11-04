@@ -1,0 +1,1577 @@
+[
+ {
+  "id": "A01",
+  "category": "attribute",
+  "question": "How many countries are there in the world.countries layer?",
+  "type": "number",
+  "solution": {
+   "tool": "aggregate",
+   "args": {
+    "layer": "world.countries"
+   },
+   "path": "rows.0.count"
+  },
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": 242,
+  "gold_sql": "SELECT count(*) FROM world.countries"
+ },
+ {
+  "id": "A02",
+  "category": "attribute",
+  "question": "How many countries are in Africa?",
+  "type": "number",
+  "solution": {
+   "tool": "aggregate",
+   "args": {
+    "layer": "world.countries",
+    "filters": [
+     {
+      "column": "continent",
+      "op": "=",
+      "value": "Africa"
+     }
+    ]
+   },
+   "path": "rows.0.count"
+  },
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": 54,
+  "gold_sql": "SELECT count(*) FROM world.countries WHERE continent = 'Africa'"
+ },
+ {
+  "id": "A03",
+  "category": "attribute",
+  "question": "What is the estimated population (pop_est) of Turkey?",
+  "type": "number",
+  "solution": {
+   "tool": "find_features",
+   "args": {
+    "layer": "world.countries",
+    "filters": [
+     {
+      "column": "name",
+      "op": "=",
+      "value": "Turkey"
+     }
+    ],
+    "columns": [
+     "pop_est"
+    ],
+    "geometry": "none"
+   },
+   "path": "features.0.properties.pop_est"
+  },
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": 83429615,
+  "gold_sql": "SELECT pop_est FROM world.countries WHERE name = 'Turkey'"
+ },
+ {
+  "id": "A04",
+  "category": "attribute",
+  "question": "Which country in South America has the largest population?",
+  "type": "text",
+  "solution": {
+   "tool": "find_features",
+   "args": {
+    "layer": "world.countries",
+    "filters": [
+     {
+      "column": "continent",
+      "op": "=",
+      "value": "South America"
+     }
+    ],
+    "columns": [
+     "name"
+    ],
+    "order_by": "pop_est",
+    "descending": true,
+    "limit": 1,
+    "geometry": "none"
+   },
+   "path": "features.0.properties.name"
+  },
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": "Brazil",
+  "gold_sql": "SELECT name FROM world.countries WHERE continent = 'South America' ORDER BY pop_est DESC LIMIT 1"
+ },
+ {
+  "id": "A05",
+  "category": "attribute",
+  "question": "How many populated places are national capitals (is_capital = true)?",
+  "type": "number",
+  "solution": {
+   "tool": "aggregate",
+   "args": {
+    "layer": "world.cities",
+    "filters": [
+     {
+      "column": "is_capital",
+      "op": "=",
+      "value": true
+     }
+    ]
+   },
+   "path": "rows.0.count"
+  },
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": 200,
+  "gold_sql": "SELECT count(*) FROM world.cities WHERE is_capital"
+ },
+ {
+  "id": "A06",
+  "category": "attribute",
+  "question": "How many populated places have a pop_max above 5 million?",
+  "type": "number",
+  "solution": {
+   "tool": "aggregate",
+   "args": {
+    "layer": "world.cities",
+    "filters": [
+     {
+      "column": "pop_max",
+      "op": ">",
+      "value": 5000000
+     }
+    ]
+   },
+   "path": "rows.0.count"
+  },
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": 53,
+  "gold_sql": "SELECT count(*) FROM world.cities WHERE pop_max > 5000000"
+ },
+ {
+  "id": "A07",
+  "category": "attribute",
+  "question": "Which are the three most populous cities in Japan (by pop_max)? Give their names.",
+  "type": "set",
+  "solution": {
+   "tool": "find_features",
+   "args": {
+    "layer": "world.cities",
+    "filters": [
+     {
+      "column": "country",
+      "op": "=",
+      "value": "Japan"
+     }
+    ],
+    "columns": [
+     "name"
+    ],
+    "order_by": "pop_max",
+    "descending": true,
+    "limit": 3,
+    "geometry": "none"
+   },
+   "path": "features[*].properties.name"
+  },
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": [
+   "Nagoya",
+   "Tokyo",
+   "Ōsaka"
+  ],
+  "gold_sql": "SELECT name FROM world.cities WHERE country = 'Japan' ORDER BY pop_max DESC LIMIT 3"
+ },
+ {
+  "id": "A08",
+  "category": "attribute",
+  "question": "How many pharmacies (kind = 'pharmacy') are there in the Ankara POI data?",
+  "type": "number",
+  "solution": {
+   "tool": "aggregate",
+   "args": {
+    "layer": "ankara.pois",
+    "filters": [
+     {
+      "column": "kind",
+      "op": "=",
+      "value": "pharmacy"
+     }
+    ]
+   },
+   "path": "rows.0.count"
+  },
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": 329,
+  "gold_sql": "SELECT count(*) FROM ankara.pois WHERE kind = 'pharmacy'"
+ },
+ {
+  "id": "A09",
+  "category": "attribute",
+  "question": "How many restaurants in the Ankara POI data have cuisine 'kebab'?",
+  "type": "number",
+  "solution": {
+   "tool": "aggregate",
+   "args": {
+    "layer": "ankara.pois",
+    "filters": [
+     {
+      "column": "kind",
+      "op": "=",
+      "value": "restaurant"
+     },
+     {
+      "column": "cuisine",
+      "op": "=",
+      "value": "kebab"
+     }
+    ]
+   },
+   "path": "rows.0.count"
+  },
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": 9,
+  "gold_sql": "SELECT count(*) FROM ankara.pois WHERE kind = 'restaurant' AND cuisine = 'kebab'"
+ },
+ {
+  "id": "A10",
+  "category": "attribute",
+  "question": "How many distinct kinds of POI exist in the 'amenity' category of the Ankara POI data?",
+  "type": "number",
+  "solution": {
+   "tool": "aggregate",
+   "args": {
+    "layer": "ankara.pois",
+    "filters": [
+     {
+      "column": "category",
+      "op": "=",
+      "value": "amenity"
+     }
+    ],
+    "metrics": [
+     {
+      "fn": "count_distinct",
+      "column": "kind"
+     }
+    ]
+   },
+   "path": "rows.0.distinct_kind"
+  },
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": 21,
+  "gold_sql": "SELECT count(DISTINCT kind) FROM ankara.pois WHERE category = 'amenity'"
+ },
+ {
+  "id": "A11",
+  "category": "attribute",
+  "question": "How many road segments in the Ankara roads layer are of highway type 'primary'?",
+  "type": "number",
+  "solution": {
+   "tool": "aggregate",
+   "args": {
+    "layer": "ankara.roads",
+    "filters": [
+     {
+      "column": "highway",
+      "op": "=",
+      "value": "primary"
+     }
+    ]
+   },
+   "path": "rows.0.count"
+  },
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": 490,
+  "gold_sql": "SELECT count(*) FROM ankara.roads WHERE highway = 'primary'"
+ },
+ {
+  "id": "A12",
+  "category": "attribute",
+  "question": "How many parks in the Ankara parks layer have a name (name is not null) and leisure = 'park'?",
+  "type": "number",
+  "solution": {
+   "tool": "aggregate",
+   "args": {
+    "layer": "ankara.parks",
+    "filters": [
+     {
+      "column": "name",
+      "op": "not_null"
+     },
+     {
+      "column": "leisure",
+      "op": "=",
+      "value": "park"
+     }
+    ]
+   },
+   "path": "rows.0.count"
+  },
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": 97,
+  "gold_sql": "SELECT count(*) FROM ankara.parks WHERE name IS NOT NULL AND leisure = 'park'"
+ },
+ {
+  "id": "A13",
+  "category": "attribute",
+  "question": "How many admin-1 regions does the United States of America have in the world.provinces layer?",
+  "type": "number",
+  "solution": {
+   "tool": "aggregate",
+   "args": {
+    "layer": "world.provinces",
+    "filters": [
+     {
+      "column": "country",
+      "op": "=",
+      "value": "United States of America"
+     }
+    ]
+   },
+   "path": "rows.0.count"
+  },
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": 51,
+  "gold_sql": "SELECT count(*) FROM world.provinces WHERE country = 'United States of America'"
+ },
+ {
+  "id": "D01",
+  "category": "distance",
+  "question": "How many pharmacies are within 500 metres of Kizilay Square, Ankara (lat 39.9208, lon 32.8541)?",
+  "type": "number",
+  "solution": {
+   "tool": "within_distance",
+   "args": {
+    "layer": "ankara.pois",
+    "distance_m": 500,
+    "lon": 32.8541,
+    "lat": 39.9208,
+    "filters": [
+     {
+      "column": "kind",
+      "op": "=",
+      "value": "pharmacy"
+     }
+    ],
+    "columns": [
+     "name"
+    ],
+    "limit": 5000,
+    "geometry": "none"
+   },
+   "path": "count"
+  },
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": 20,
+  "gold_sql": "SELECT count(*) FROM ankara.pois WHERE kind = 'pharmacy' AND ST_DWithin(geom::geography, ST_SetSRID(ST_MakePoint(32.8541, 39.9208), 4326)::geography, 500)"
+ },
+ {
+  "id": "D02",
+  "category": "distance",
+  "question": "How many cafes are within 300 metres of Kizilay Square, Ankara (lat 39.9208, lon 32.8541)?",
+  "type": "number",
+  "solution": {
+   "tool": "within_distance",
+   "args": {
+    "layer": "ankara.pois",
+    "distance_m": 300,
+    "lon": 32.8541,
+    "lat": 39.9208,
+    "filters": [
+     {
+      "column": "kind",
+      "op": "=",
+      "value": "cafe"
+     }
+    ],
+    "columns": [
+     "name"
+    ],
+    "limit": 5000,
+    "geometry": "none"
+   },
+   "path": "count"
+  },
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": 28,
+  "gold_sql": "SELECT count(*) FROM ankara.pois WHERE kind = 'cafe' AND ST_DWithin(geom::geography, ST_SetSRID(ST_MakePoint(32.8541, 39.9208), 4326)::geography, 300)"
+ },
+ {
+  "id": "D03",
+  "category": "distance",
+  "question": "How many restaurants are within 1 kilometre of Kizilay Square, Ankara (lat 39.9208, lon 32.8541)?",
+  "type": "number",
+  "solution": {
+   "tool": "within_distance",
+   "args": {
+    "layer": "ankara.pois",
+    "distance_m": 1000,
+    "lon": 32.8541,
+    "lat": 39.9208,
+    "filters": [
+     {
+      "column": "kind",
+      "op": "=",
+      "value": "restaurant"
+     }
+    ],
+    "columns": [
+     "name"
+    ],
+    "limit": 5000,
+    "geometry": "none"
+   },
+   "path": "count"
+  },
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": 53,
+  "gold_sql": "SELECT count(*) FROM ankara.pois WHERE kind = 'restaurant' AND ST_DWithin(geom::geography, ST_SetSRID(ST_MakePoint(32.8541, 39.9208), 4326)::geography, 1000)"
+ },
+ {
+  "id": "D04",
+  "category": "distance",
+  "question": "How many banks are within 200 metres of Kizilay Square, Ankara (lat 39.9208, lon 32.8541)?",
+  "type": "number",
+  "solution": {
+   "tool": "within_distance",
+   "args": {
+    "layer": "ankara.pois",
+    "distance_m": 200,
+    "lon": 32.8541,
+    "lat": 39.9208,
+    "filters": [
+     {
+      "column": "kind",
+      "op": "=",
+      "value": "bank"
+     }
+    ],
+    "columns": [
+     "name"
+    ],
+    "limit": 5000,
+    "geometry": "none"
+   },
+   "path": "count"
+  },
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": 13,
+  "gold_sql": "SELECT count(*) FROM ankara.pois WHERE kind = 'bank' AND ST_DWithin(geom::geography, ST_SetSRID(ST_MakePoint(32.8541, 39.9208), 4326)::geography, 200)"
+ },
+ {
+  "id": "D05",
+  "category": "distance",
+  "question": "What is the distance in metres from Kizilay Square, Ankara (lat 39.9208, lon 32.8541) to the nearest hospital (kind = 'hospital')? Round to the nearest 10 m.",
+  "type": "number",
+  "solution": {
+   "tool": "nearest",
+   "args": {
+    "layer": "ankara.pois",
+    "k": 1,
+    "lon": 32.8541,
+    "lat": 39.9208,
+    "filters": [
+     {
+      "column": "kind",
+      "op": "=",
+      "value": "hospital"
+     }
+    ],
+    "geometry": "none"
+   },
+   "path": "features.0.properties.distance_m"
+  },
+  "tol": 15,
+  "rel": 0.0,
+  "gold": 800.0,
+  "gold_sql": "SELECT round(min(ST_Distance(geom::geography, ST_SetSRID(ST_MakePoint(32.8541, 39.9208), 4326)::geography))::numeric, -1) FROM ankara.pois WHERE kind = 'hospital'"
+ },
+ {
+  "id": "D06",
+  "category": "distance",
+  "question": "Which subway station (kind = 'subway_station') is nearest to Kizilay Square, Ankara (lat 39.9208, lon 32.8541)?",
+  "type": "text",
+  "solution": {
+   "tool": "nearest",
+   "args": {
+    "layer": "ankara.pois",
+    "k": 1,
+    "lon": 32.8541,
+    "lat": 39.9208,
+    "filters": [
+     {
+      "column": "kind",
+      "op": "=",
+      "value": "subway_station"
+     }
+    ],
+    "columns": [
+     "name"
+    ],
+    "geometry": "none"
+   },
+   "path": "features.0.properties.name"
+  },
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": "15 Temmuz Kızılay Millî İrade",
+  "gold_sql": "SELECT name FROM ankara.pois WHERE kind = 'subway_station' ORDER BY ST_Distance(geom::geography, ST_SetSRID(ST_MakePoint(32.8541, 39.9208), 4326)::geography) LIMIT 1"
+ },
+ {
+  "id": "D07",
+  "category": "distance",
+  "question": "Which are the three pharmacies nearest to Kizilay Square, Ankara (lat 39.9208, lon 32.8541)? Give their names.",
+  "type": "set",
+  "solution": {
+   "tool": "nearest",
+   "args": {
+    "layer": "ankara.pois",
+    "k": 3,
+    "lon": 32.8541,
+    "lat": 39.9208,
+    "filters": [
+     {
+      "column": "kind",
+      "op": "=",
+      "value": "pharmacy"
+     }
+    ],
+    "columns": [
+     "name"
+    ],
+    "geometry": "none"
+   },
+   "path": "features[*].properties.name"
+  },
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": [
+   "Botanica",
+   "Karakoyunlu Eczanesi",
+   "Kumrular Eczanesi"
+  ],
+  "gold_sql": "SELECT name FROM (SELECT name FROM ankara.pois WHERE kind = 'pharmacy' ORDER BY ST_Distance(geom::geography, ST_SetSRID(ST_MakePoint(32.8541, 39.9208), 4326)::geography) LIMIT 3) t"
+ },
+ {
+  "id": "D08",
+  "category": "distance",
+  "question": "How many schools (kind = 'school') are within 1500 metres of the point lat 39.925, lon 32.83?",
+  "type": "number",
+  "solution": {
+   "tool": "within_distance",
+   "args": {
+    "layer": "ankara.pois",
+    "distance_m": 1500,
+    "lon": 32.83,
+    "lat": 39.925,
+    "filters": [
+     {
+      "column": "kind",
+      "op": "=",
+      "value": "school"
+     }
+    ],
+    "columns": [
+     "name"
+    ],
+    "limit": 5000,
+    "geometry": "none"
+   },
+   "path": "count"
+  },
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": 22,
+  "gold_sql": "SELECT count(*) FROM ankara.pois WHERE kind = 'school' AND ST_DWithin(geom::geography, ST_SetSRID(ST_MakePoint(32.83, 39.925), 4326)::geography, 1500)"
+ },
+ {
+  "id": "D09",
+  "category": "distance",
+  "question": "What is the geodesic distance in kilometres between the populated places Ankara and Istanbul (country Turkey)? Round to the nearest km.",
+  "type": "number",
+  "solution": {
+   "tool": "nearest",
+   "args": {
+    "layer": "world.cities",
+    "k": 1,
+    "reference_layer": "world.cities",
+    "reference_filters": [
+     {
+      "column": "name",
+      "op": "=",
+      "value": "Ankara"
+     },
+     {
+      "column": "country",
+      "op": "=",
+      "value": "Turkey"
+     }
+    ],
+    "filters": [
+     {
+      "column": "name",
+      "op": "=",
+      "value": "Istanbul"
+     },
+     {
+      "column": "country",
+      "op": "=",
+      "value": "Turkey"
+     }
+    ],
+    "columns": [
+     "name"
+    ],
+    "geometry": "none"
+   },
+   "path": "features.0.properties.distance_m"
+  },
+  "tol": 2.0,
+  "rel": 0.0,
+  "answer_hint": "km; tool distances are in metres",
+  "gold": 351.0,
+  "gold_sql": "SELECT round((ST_Distance(a.geom::geography, b.geom::geography) / 1000)::numeric) FROM world.cities a, world.cities b WHERE a.name = 'Ankara' AND a.country = 'Turkey' AND b.name = 'Istanbul' AND b.country = 'Turkey'"
+ },
+ {
+  "id": "D10",
+  "category": "distance",
+  "question": "How many populated places other than Ankara itself, with pop_max above 1,000,000, lie within 500 km of Ankara (Turkey)?",
+  "type": "number",
+  "solution": {
+   "tool": "within_distance",
+   "args": {
+    "layer": "world.cities",
+    "distance_m": 500000,
+    "reference_layer": "world.cities",
+    "reference_filters": [
+     {
+      "column": "name",
+      "op": "=",
+      "value": "Ankara"
+     },
+     {
+      "column": "country",
+      "op": "=",
+      "value": "Turkey"
+     }
+    ],
+    "filters": [
+     {
+      "column": "pop_max",
+      "op": ">",
+      "value": 1000000
+     },
+     {
+      "column": "name",
+      "op": "!=",
+      "value": "Ankara"
+     }
+    ],
+    "columns": [
+     "name"
+    ],
+    "limit": 5000,
+    "geometry": "none"
+   },
+   "path": "count"
+  },
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": 3,
+  "gold_sql": "SELECT count(*) FROM world.cities c, (SELECT geom FROM world.cities WHERE name = 'Ankara' AND country = 'Turkey') a WHERE c.pop_max > 1000000 AND NOT (c.name = 'Ankara' AND c.country = 'Turkey') AND ST_DWithin(c.geom::geography, a.geom::geography, 500000)"
+ },
+ {
+  "id": "S01",
+  "category": "spatial",
+  "question": "How many POIs from the Ankara POI layer lie inside the park named 'Gençlik Parkı'?",
+  "type": "number",
+  "solution": {
+   "tool": "spatial_filter",
+   "args": {
+    "layer": "ankara.pois",
+    "relation": "within",
+    "other_layer": "ankara.parks",
+    "other_filters": [
+     {
+      "column": "name",
+      "op": "=",
+      "value": "Gençlik Parkı"
+     }
+    ],
+    "columns": [
+     "name"
+    ],
+    "limit": 5000,
+    "geometry": "none"
+   },
+   "path": "count"
+  },
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": 6,
+  "gold_sql": "SELECT count(*) FROM ankara.pois p JOIN ankara.parks k ON ST_Within(p.geom, k.geom) WHERE k.name = 'Gençlik Parkı'"
+ },
+ {
+  "id": "S02",
+  "category": "spatial",
+  "question": "Which country polygon in world.countries contains the point lat 48.85, lon 2.35?",
+  "type": "text",
+  "solution": {
+   "tool": "spatial_filter",
+   "args": {
+    "layer": "world.countries",
+    "relation": "contains",
+    "geojson_geometry": {
+     "type": "Point",
+     "coordinates": [
+      2.35,
+      48.85
+     ]
+    },
+    "columns": [
+     "name"
+    ],
+    "geometry": "none"
+   },
+   "path": "features.0.properties.name"
+  },
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": "France",
+  "gold_sql": "SELECT name FROM world.countries WHERE ST_Contains(geom, ST_SetSRID(ST_MakePoint(2.35, 48.85), 4326))"
+ },
+ {
+  "id": "S03",
+  "category": "spatial",
+  "question": "In which neighbourhood (ankara.neighbourhoods) is Kizilay Square, Ankara (lat 39.9208, lon 32.8541)?",
+  "type": "text",
+  "solution": {
+   "tool": "spatial_filter",
+   "args": {
+    "layer": "ankara.neighbourhoods",
+    "relation": "contains",
+    "geojson_geometry": {
+     "type": "Point",
+     "coordinates": [
+      32.8541,
+      39.9208
+     ]
+    },
+    "columns": [
+     "name"
+    ],
+    "geometry": "none"
+   },
+   "path": "features.0.properties.name"
+  },
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": "Cumhuriyet Mahallesi",
+  "gold_sql": "SELECT name FROM ankara.neighbourhoods WHERE ST_Contains(geom, ST_SetSRID(ST_MakePoint(32.8541, 39.9208), 4326))"
+ },
+ {
+  "id": "S04",
+  "category": "spatial",
+  "question": "How many countries does the river named 'Danube' intersect in world.rivers / world.countries?",
+  "type": "number",
+  "solution": {
+   "tool": "spatial_filter",
+   "args": {
+    "layer": "world.countries",
+    "relation": "intersects",
+    "other_layer": "world.rivers",
+    "other_filters": [
+     {
+      "column": "name",
+      "op": "=",
+      "value": "Danube"
+     }
+    ],
+    "columns": [
+     "name"
+    ],
+    "limit": 5000,
+    "geometry": "none"
+   },
+   "path": "count"
+  },
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": 7,
+  "gold_sql": "SELECT count(DISTINCT c.name) FROM world.countries c JOIN world.rivers r ON ST_Intersects(c.geom, r.geom) WHERE r.name = 'Danube'"
+ },
+ {
+  "id": "S05",
+  "category": "spatial",
+  "question": "How many road segments of the Ankara roads layer intersect the neighbourhood 'Kocatepe Mahallesi'?",
+  "type": "number",
+  "solution": {
+   "tool": "spatial_filter",
+   "args": {
+    "layer": "ankara.roads",
+    "relation": "intersects",
+    "other_layer": "ankara.neighbourhoods",
+    "other_filters": [
+     {
+      "column": "name",
+      "op": "=",
+      "value": "Kocatepe Mahallesi"
+     }
+    ],
+    "columns": [
+     "name"
+    ],
+    "limit": 5000,
+    "geometry": "none"
+   },
+   "path": "count"
+  },
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": 23,
+  "gold_sql": "SELECT count(*) FROM ankara.roads r JOIN ankara.neighbourhoods n ON ST_Intersects(r.geom, n.geom) WHERE n.name = 'Kocatepe Mahallesi'"
+ },
+ {
+  "id": "S06",
+  "category": "spatial",
+  "question": "How many lakes of the world.lakes layer intersect the country Canada?",
+  "type": "number",
+  "solution": {
+   "tool": "spatial_filter",
+   "args": {
+    "layer": "world.lakes",
+    "relation": "intersects",
+    "other_layer": "world.countries",
+    "other_filters": [
+     {
+      "column": "name",
+      "op": "=",
+      "value": "Canada"
+     }
+    ],
+    "columns": [
+     "name"
+    ],
+    "limit": 5000,
+    "geometry": "none"
+   },
+   "path": "count"
+  },
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": 117,
+  "gold_sql": "SELECT count(*) FROM world.lakes l JOIN world.countries c ON ST_Intersects(l.geom, c.geom) WHERE c.name = 'Canada'"
+ },
+ {
+  "id": "S07",
+  "category": "spatial",
+  "question": "How many populated places of world.cities lie inside the bounding box lon 5..15, lat 45..55?",
+  "type": "number",
+  "solution": {
+   "tool": "spatial_filter",
+   "args": {
+    "layer": "world.cities",
+    "relation": "intersects",
+    "bbox": [
+     5,
+     45,
+     15,
+     55
+    ],
+    "columns": [
+     "name"
+    ],
+    "limit": 5000,
+    "geometry": "none"
+   },
+   "path": "count"
+  },
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": 22,
+  "gold_sql": "SELECT count(*) FROM world.cities WHERE geom && ST_MakeEnvelope(5, 45, 15, 55, 4326)"
+ },
+ {
+  "id": "S08",
+  "category": "spatial",
+  "question": "How many neighbourhoods of ankara.neighbourhoods touch the neighbourhood 'Kocatepe Mahallesi' (share a boundary, excluding itself)?",
+  "type": "number",
+  "solution": {
+   "tool": "spatial_filter",
+   "args": {
+    "layer": "ankara.neighbourhoods",
+    "relation": "touches",
+    "other_layer": "ankara.neighbourhoods",
+    "other_filters": [
+     {
+      "column": "name",
+      "op": "=",
+      "value": "Kocatepe Mahallesi"
+     }
+    ],
+    "columns": [
+     "name"
+    ],
+    "limit": 5000,
+    "geometry": "none"
+   },
+   "path": "count"
+  },
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": 4,
+  "gold_sql": "SELECT count(*) FROM ankara.neighbourhoods a, ankara.neighbourhoods b WHERE b.name = 'Kocatepe Mahallesi' AND a.osm_id <> b.osm_id AND ST_Touches(a.geom, b.geom)"
+ },
+ {
+  "id": "G01",
+  "category": "aggregate",
+  "question": "What is the total population (sum of pop_est) of all countries in Europe?",
+  "type": "number",
+  "solution": {
+   "tool": "aggregate",
+   "args": {
+    "layer": "world.countries",
+    "filters": [
+     {
+      "column": "continent",
+      "op": "=",
+      "value": "Europe"
+     }
+    ],
+    "metrics": [
+     {
+      "fn": "sum",
+      "column": "pop_est"
+     }
+    ]
+   },
+   "path": "rows.0.sum_pop_est"
+  },
+  "tol": 0.0,
+  "rel": 0.0001,
+  "gold": 746437653.0,
+  "gold_sql": "SELECT sum(pop_est) FROM world.countries WHERE continent = 'Europe'"
+ },
+ {
+  "id": "G02",
+  "category": "aggregate",
+  "question": "How many countries are in Asia and Oceania combined?",
+  "type": "number",
+  "solution": {
+   "tool": "aggregate",
+   "args": {
+    "layer": "world.countries",
+    "filters": [
+     {
+      "column": "continent",
+      "op": "in",
+      "value": [
+       "Asia",
+       "Oceania"
+      ]
+     }
+    ]
+   },
+   "path": "rows.0.count"
+  },
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": 78,
+  "gold_sql": "SELECT count(*) FROM world.countries WHERE continent IN ('Asia', 'Oceania')"
+ },
+ {
+  "id": "G03",
+  "category": "aggregate",
+  "question": "What is the average pop_max of populated places that are national capitals? Round to the nearest whole number.",
+  "type": "number",
+  "solution": {
+   "tool": "aggregate",
+   "args": {
+    "layer": "world.cities",
+    "filters": [
+     {
+      "column": "is_capital",
+      "op": "=",
+      "value": true
+     }
+    ],
+    "metrics": [
+     {
+      "fn": "avg",
+      "column": "pop_max"
+     }
+    ]
+   },
+   "path": "rows.0.avg_pop_max"
+  },
+  "tol": 1.0,
+  "rel": 0.0,
+  "gold": 2172660.0,
+  "gold_sql": "SELECT round(avg(pop_max)) FROM world.cities WHERE is_capital"
+ },
+ {
+  "id": "G04",
+  "category": "aggregate",
+  "question": "Which continent has the highest total GDP (sum of gdp_musd) in world.countries?",
+  "type": "text",
+  "solution": {
+   "tool": "aggregate",
+   "args": {
+    "layer": "world.countries",
+    "group_by": [
+     "continent"
+    ],
+    "metrics": [
+     {
+      "fn": "sum",
+      "column": "gdp_musd"
+     }
+    ],
+    "limit": 1
+   },
+   "path": "rows.0.continent"
+  },
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": "Asia",
+  "gold_sql": "SELECT continent FROM world.countries GROUP BY continent ORDER BY sum(gdp_musd) DESC LIMIT 1"
+ },
+ {
+  "id": "G05",
+  "category": "aggregate",
+  "question": "What is the total geodesic area in km2 of all parks in the Ankara parks layer? Round to 1 decimal.",
+  "type": "number",
+  "solution": {
+   "tool": "aggregate",
+   "args": {
+    "layer": "ankara.parks",
+    "metrics": [
+     {
+      "fn": "area_km2"
+     }
+    ]
+   },
+   "path": "rows.0.area_km2"
+  },
+  "tol": 0.06,
+  "rel": 0.0,
+  "gold": 3.6,
+  "gold_sql": "SELECT round((sum(ST_Area(geom::geography)) / 1e6)::numeric, 1) FROM ankara.parks"
+ },
+ {
+  "id": "G06",
+  "category": "aggregate",
+  "question": "What is the total geodesic length in km of roads with highway = 'residential' in the Ankara roads layer? Round to 1 decimal.",
+  "type": "number",
+  "solution": {
+   "tool": "aggregate",
+   "args": {
+    "layer": "ankara.roads",
+    "filters": [
+     {
+      "column": "highway",
+      "op": "=",
+      "value": "residential"
+     }
+    ],
+    "metrics": [
+     {
+      "fn": "length_km"
+     }
+    ]
+   },
+   "path": "rows.0.length_km"
+  },
+  "tol": 0.6,
+  "rel": 0.0,
+  "gold": 471.7,
+  "gold_sql": "SELECT round((sum(ST_Length(geom::geography)) / 1000)::numeric, 1) FROM ankara.roads WHERE highway = 'residential'"
+ },
+ {
+  "id": "G07",
+  "category": "aggregate",
+  "question": "Which highway type has the greatest total length in the Ankara roads layer?",
+  "type": "text",
+  "solution": {
+   "tool": "aggregate",
+   "args": {
+    "layer": "ankara.roads",
+    "group_by": [
+     "highway"
+    ],
+    "metrics": [
+     {
+      "fn": "length_km"
+     }
+    ],
+    "limit": 1
+   },
+   "path": "rows.0.highway"
+  },
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": "residential",
+  "gold_sql": "SELECT highway FROM ankara.roads GROUP BY highway ORDER BY sum(ST_Length(geom::geography)) DESC LIMIT 1"
+ },
+ {
+  "id": "G08",
+  "category": "aggregate",
+  "question": "What is the geodesic area of Turkey in km2 according to the world.countries polygon? Round to the nearest 1000 km2.",
+  "type": "number",
+  "solution": {
+   "tool": "aggregate",
+   "args": {
+    "layer": "world.countries",
+    "filters": [
+     {
+      "column": "name",
+      "op": "=",
+      "value": "Turkey"
+     }
+    ],
+    "metrics": [
+     {
+      "fn": "area_km2"
+     }
+    ]
+   },
+   "path": "rows.0.area_km2"
+  },
+  "tol": 2000,
+  "rel": 0.0,
+  "gold": 780000.0,
+  "gold_sql": "SELECT round((ST_Area(geom::geography) / 1e6)::numeric, -3) FROM world.countries WHERE name = 'Turkey'"
+ },
+ {
+  "id": "G09",
+  "category": "aggregate",
+  "question": "Which African country has the largest area (geodesic) in world.countries?",
+  "type": "text",
+  "solution": {
+   "tool": "aggregate",
+   "args": {
+    "layer": "world.countries",
+    "filters": [
+     {
+      "column": "continent",
+      "op": "=",
+      "value": "Africa"
+     }
+    ],
+    "group_by": [
+     "name"
+    ],
+    "metrics": [
+     {
+      "fn": "area_km2"
+     }
+    ],
+    "limit": 1
+   },
+   "path": "rows.0.name"
+  },
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": "Dem. Rep. Congo",
+  "gold_sql": "SELECT name FROM world.countries WHERE continent = 'Africa' ORDER BY ST_Area(geom::geography) DESC LIMIT 1"
+ },
+ {
+  "id": "G10",
+  "category": "aggregate",
+  "question": "How many distinct countries appear in the country column of world.cities?",
+  "type": "number",
+  "solution": {
+   "tool": "aggregate",
+   "args": {
+    "layer": "world.cities",
+    "metrics": [
+     {
+      "fn": "count_distinct",
+      "column": "country"
+     }
+    ]
+   },
+   "path": "rows.0.distinct_country"
+  },
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": 217,
+  "gold_sql": "SELECT count(DISTINCT country) FROM world.cities"
+ },
+ {
+  "id": "J01",
+  "category": "join",
+  "question": "Which neighbourhood contains the most pharmacies (kind = 'pharmacy')?",
+  "type": "text",
+  "solution": {
+   "tool": "spatial_join",
+   "args": {
+    "left_layer": "ankara.neighbourhoods",
+    "right_layer": "ankara.pois",
+    "relation": "contains",
+    "right_filters": [
+     {
+      "column": "kind",
+      "op": "=",
+      "value": "pharmacy"
+     }
+    ],
+    "limit": 1,
+    "geometry": "none"
+   },
+   "path": "features.0.properties.name"
+  },
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": "Hacettepe Mahallesi",
+  "gold_sql": "SELECT n.name FROM ankara.neighbourhoods n LEFT JOIN ankara.pois p ON ST_Contains(n.geom, p.geom) AND p.kind = 'pharmacy' GROUP BY n.osm_id, n.name ORDER BY count(p.*) DESC, n.name LIMIT 1"
+ },
+ {
+  "id": "J02",
+  "category": "join",
+  "question": "How many neighbourhoods contain at least one cafe (kind = 'cafe')?",
+  "type": "number",
+  "solution": {
+   "tool": "spatial_join",
+   "args": {
+    "left_layer": "ankara.neighbourhoods",
+    "right_layer": "ankara.pois",
+    "relation": "contains",
+    "right_filters": [
+     {
+      "column": "kind",
+      "op": "=",
+      "value": "cafe"
+     }
+    ],
+    "min_count": 1,
+    "limit": 5000,
+    "geometry": "none"
+   },
+   "path": "count"
+  },
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": 42,
+  "gold_sql": "SELECT count(*) FROM ankara.neighbourhoods n WHERE EXISTS (SELECT 1 FROM ankara.pois p WHERE p.kind = 'cafe' AND ST_Contains(n.geom, p.geom))"
+ },
+ {
+  "id": "J03",
+  "category": "join",
+  "question": "How many pharmacies lie inside the neighbourhood 'Hacettepe Mahallesi'?",
+  "type": "number",
+  "solution": {
+   "tool": "spatial_join",
+   "args": {
+    "left_layer": "ankara.neighbourhoods",
+    "right_layer": "ankara.pois",
+    "relation": "contains",
+    "left_filters": [
+     {
+      "column": "name",
+      "op": "=",
+      "value": "Hacettepe Mahallesi"
+     }
+    ],
+    "right_filters": [
+     {
+      "column": "kind",
+      "op": "=",
+      "value": "pharmacy"
+     }
+    ],
+    "geometry": "none"
+   },
+   "path": "features.0.properties.right_count"
+  },
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": 23,
+  "gold_sql": "SELECT count(*) FROM ankara.pois p JOIN ankara.neighbourhoods n ON ST_Contains(n.geom, p.geom) WHERE p.kind = 'pharmacy' AND n.name = 'Hacettepe Mahallesi'"
+ },
+ {
+  "id": "J04",
+  "category": "join",
+  "question": "Using a spatial join between world.countries and world.cities, which country polygon contains the most populated places?",
+  "type": "text",
+  "solution": {
+   "tool": "spatial_join",
+   "args": {
+    "left_layer": "world.countries",
+    "right_layer": "world.cities",
+    "relation": "contains",
+    "limit": 1,
+    "geometry": "none"
+   },
+   "path": "features.0.properties.name"
+  },
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": "United States of America",
+  "gold_sql": "SELECT c.name FROM world.countries c JOIN world.cities p ON ST_Contains(c.geom, p.geom) GROUP BY c.name ORDER BY count(*) DESC, c.name LIMIT 1"
+ },
+ {
+  "id": "J05",
+  "category": "join",
+  "question": "How many parks in the Ankara parks layer contain at least one cafe (kind = 'cafe')?",
+  "type": "number",
+  "solution": {
+   "tool": "spatial_join",
+   "args": {
+    "left_layer": "ankara.parks",
+    "right_layer": "ankara.pois",
+    "relation": "contains",
+    "right_filters": [
+     {
+      "column": "kind",
+      "op": "=",
+      "value": "cafe"
+     }
+    ],
+    "min_count": 1,
+    "limit": 5000,
+    "geometry": "none"
+   },
+   "path": "count"
+  },
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": 5,
+  "gold_sql": "SELECT count(*) FROM ankara.parks k WHERE EXISTS (SELECT 1 FROM ankara.pois p WHERE p.kind = 'cafe' AND ST_Contains(k.geom, p.geom))"
+ },
+ {
+  "id": "J06",
+  "category": "join",
+  "question": "What is the total pop_max of the populated places inside Germany (spatial join of world.countries and world.cities)? ",
+  "type": "number",
+  "solution": {
+   "tool": "spatial_join",
+   "args": {
+    "left_layer": "world.countries",
+    "right_layer": "world.cities",
+    "relation": "contains",
+    "mode": "sum",
+    "right_column": "pop_max",
+    "left_filters": [
+     {
+      "column": "name",
+      "op": "=",
+      "value": "Germany"
+     }
+    ],
+    "geometry": "none"
+   },
+   "path": "features.0.properties.right_sum_pop_max"
+  },
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": 9950515,
+  "gold_sql": "SELECT sum(p.pop_max) FROM world.cities p JOIN world.countries c ON ST_Contains(c.geom, p.geom) WHERE c.name = 'Germany'"
+ },
+ {
+  "id": "B01",
+  "category": "buffer",
+  "question": "What is the area in km2 of a 1 km radius buffer around Kizilay Square, Ankara (lat 39.9208, lon 32.8541)? Round to 2 decimals.",
+  "type": "number",
+  "solution": {
+   "tool": "buffer",
+   "args": {
+    "distance_m": 1000,
+    "lon": 32.8541,
+    "lat": 39.9208
+   },
+   "path": "features.0.properties.area_km2"
+  },
+  "tol": 0.05,
+  "rel": 0.0,
+  "gold": 3.12,
+  "gold_sql": "SELECT round((ST_Area(ST_Buffer(ST_SetSRID(ST_MakePoint(32.8541, 39.9208), 4326)::geography, 1000)::geography) / 1e6)::numeric, 2)"
+ },
+ {
+  "id": "B02",
+  "category": "buffer",
+  "question": "How many banks (kind = 'bank') are within 250 metres of the park named 'Gençlik Parkı' (distance measured to the park polygon)?",
+  "type": "number",
+  "solution": {
+   "tool": "within_distance",
+   "args": {
+    "layer": "ankara.pois",
+    "distance_m": 250,
+    "reference_layer": "ankara.parks",
+    "reference_filters": [
+     {
+      "column": "name",
+      "op": "=",
+      "value": "Gençlik Parkı"
+     }
+    ],
+    "filters": [
+     {
+      "column": "kind",
+      "op": "=",
+      "value": "bank"
+     }
+    ],
+    "columns": [
+     "name"
+    ],
+    "limit": 5000,
+    "geometry": "none"
+   },
+   "path": "count"
+  },
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": 2,
+  "gold_sql": "SELECT count(*) FROM ankara.pois p, ankara.parks k WHERE p.kind = 'bank' AND k.name = 'Gençlik Parkı' AND ST_DWithin(p.geom::geography, k.geom::geography, 250)"
+ },
+ {
+  "id": "B03",
+  "category": "buffer",
+  "question": "What is the area in km2 of the union of 200 m buffers around all hospitals (kind = 'hospital') in the Ankara POI data? Round to 2 decimals.",
+  "type": "number",
+  "solution": {
+   "tool": "buffer",
+   "args": {
+    "distance_m": 200,
+    "layer": "ankara.pois",
+    "filters": [
+     {
+      "column": "kind",
+      "op": "=",
+      "value": "hospital"
+     }
+    ]
+   },
+   "path": "features.0.properties.area_km2"
+  },
+  "tol": 0.0,
+  "rel": 0.02,
+  "gold": 3.49,
+  "gold_sql": "SELECT round((ST_Area(ST_Union(ST_Buffer(geom::geography, 200)::geometry)::geography) / 1e6)::numeric, 2) FROM ankara.pois WHERE kind = 'hospital'"
+ },
+ {
+  "id": "X01",
+  "category": "bbox",
+  "question": "What is the northernmost latitude among all POIs of the Ankara POI layer? Round to 3 decimals.",
+  "type": "number",
+  "solution": {
+   "tool": "bbox_of",
+   "args": {
+    "layer": "ankara.pois"
+   },
+   "path": "bbox.3"
+  },
+  "tol": 0.0015,
+  "rel": 0.0,
+  "gold": 39.961,
+  "gold_sql": "SELECT round(max(ST_Y(geom))::numeric, 3) FROM ankara.pois"
+ },
+ {
+  "id": "X02",
+  "category": "bbox",
+  "question": "What is the westernmost longitude of Turkey in world.countries? Round to 2 decimals.",
+  "type": "number",
+  "solution": {
+   "tool": "bbox_of",
+   "args": {
+    "layer": "world.countries",
+    "filters": [
+     {
+      "column": "name",
+      "op": "=",
+      "value": "Turkey"
+     }
+    ]
+   },
+   "path": "bbox.0"
+  },
+  "tol": 0.01,
+  "rel": 0.0,
+  "gold": 25.67,
+  "gold_sql": "SELECT round(ST_XMin(geom)::numeric, 2) FROM world.countries WHERE name = 'Turkey'"
+ },
+ {
+  "id": "Q01",
+  "category": "ambiguous",
+  "question": "Find the pharmacies nearby.",
+  "type": "clarify",
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": null
+ },
+ {
+  "id": "Q02",
+  "category": "ambiguous",
+  "question": "How many restaurants are within 500 metres?",
+  "type": "clarify",
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": null
+ },
+ {
+  "id": "Q03",
+  "category": "ambiguous",
+  "question": "Show me the nearest hospital.",
+  "type": "clarify",
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": null
+ },
+ {
+  "id": "Q04",
+  "category": "ambiguous",
+  "question": "How many cafes are close to the park?",
+  "type": "clarify",
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": null
+ },
+ {
+  "id": "Q05",
+  "category": "ambiguous",
+  "question": "How many schools are within walking distance of the station?",
+  "type": "clarify",
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": null
+ },
+ {
+  "id": "Q06",
+  "category": "ambiguous",
+  "question": "Buffer the roads and tell me the area.",
+  "type": "clarify",
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": null
+ },
+ {
+  "id": "Q07",
+  "category": "ambiguous",
+  "question": "How many people live in the neighbourhood?",
+  "type": "clarify",
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": null
+ },
+ {
+  "id": "Q08",
+  "category": "ambiguous",
+  "question": "List the biggest cities near the river.",
+  "type": "clarify",
+  "tol": 0.0,
+  "rel": 0.0,
+  "gold": null
+ }
+]

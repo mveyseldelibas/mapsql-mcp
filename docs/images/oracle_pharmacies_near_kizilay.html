@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pharmacies within 500 m of Kizilay (Oracle Spatial)</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+html,body,#map{height:100%;margin:0}
+.title{position:absolute;z-index:1000;top:10px;left:56px;background:rgba(255,255,255,.93);padding:6px 12px;border-radius:6px;
+font:600 15px system-ui,sans-serif;box-shadow:0 1px 4px rgba(0,0,0,.3)}
+.leaflet-popup-content table{border-collapse:collapse;font:12px system-ui,sans-serif}
+.leaflet-popup-content td{padding:2px 8px 2px 0;vertical-align:top}
+.leaflet-popup-content td:first-child{color:#555}
+</style></head>
+<body><div id="map"></div><div class="title">Pharmacies within 500 m of Kizilay (Oracle Spatial)</div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const LAYERS = [{"name":"500 m radius","color":"#64748b","value":null,"features":[{"type":"Feature","properties":{"n_features":1,"area_km2":0.7852},"geometry":{"type":"Polygon","coordinates":[[[32.8541,39.925303],[32.853867,39.9253],[32.853635,39.925289],[32.853404,39.925271],[32.853174,39.925246],[32.852945,39.925214],[32.852718,39.925176],[32.852493,39.92513],[32.852271,39.925077],[32.852051,39.925018],[32.851835,39.924952],[32.851622,39.924879],[32.851414,39.9248],[32.851209,39.924715],[32.851009,39.924623],[32.850814,39.924525],[32.850625,39.924422],[32.85044,39.924313],[32.850262,39.924198],[32.850089,39.924078],[32.849923,39.923952],[32.849764,39.923822],[32.849611,39.923687],[32.849466,39.923547],[32.849328,39.923403],[32.849197,39.923255],[32.849074,39.923103],[32.848959,39.922947],[32.848852,39.922788],[32.848754,39.922626],[32.848664,39.922461],[32.848582,39.922293],[32.84851,39.922123],[32.848446,39.921951],[32.848391,39.921777],[32.848345,39.921601],[32.848308,39.921425],[32.84828,39.921247],[32.848262,39.921068],[32.848253,39.920889],[32.848253,39.92071],[32.848262,39.920531],[32.84828,39.920353],[32.848308,39.920175],[32.848345,39.919998],[32.848391,39.919823],[32.848446,39.919649],[32.84851,39.919477],[32.848583,39.919307],[32.848664,39.919139],[32.848754,39.918974],[32.848853,39.918812],[32.848959,39.918652],[32.849074,39.918497],[32.849197,39.918345],[32.849328,39.918197],[32.849466,39.918053],[32.849612,39.917913],[32.849764,39.917778],[32.849924,39.917648],[32.85009,39.917522],[32.850262,39.917402],[32.850441,39.917287],[32.850625,39.917178],[32.850815,39.917074],[32.85101,39.916977],[32.85121,39.916885],[32.851414,39.9168],[32.851623,39.916721],[32.851835,39.916648],[32.852051,39.916582],[32.852271,39.916523],[32.852493,39.91647],[32.852718,39.916424],[32.852945,39.916386],[32.853174,39.916354],[32.853404,39.916329],[32.853635,39.916311],[32.853868,39.9163],[32.8541,39.916297],[32.854332,39.9163],[32.854565,39.916311],[32.854796,39.916329],[32.855026,39.916354],[32.855255,39.916386],[32.855482,39.916424],[32.855707,39.91647],[32.855929,39.916523],[32.856149,39.916582],[32.856365,39.916648],[32.856577,39.916721],[32.856786,39.9168],[32.85699,39.916885],[32.85719,39.916977],[32.857385,39.917074],[32.857575,39.917178],[32.857759,39.917287],[32.857938,39.917402],[32.85811,39.917522],[32.858276,39.917648],[32.858436,39.917778],[32.858588,39.917913],[32.858734,39.918053],[32.858872,39.918197],[32.859003,39.918345],[32.859126,39.918497],[32.859241,39.918652],[32.859347,39.918812],[32.859446,39.918974],[32.859536,39.919139],[32.859617,39.919307],[32.85969,39.919477],[32.859754,39.919649],[32.859809,39.919823],[32.859855,39.919998],[32.859892,39.920175],[32.85992,39.920353],[32.859938,39.920531],[32.859947,39.92071],[32.859947,39.920889],[32.859938,39.921068],[32.85992,39.921247],[32.859892,39.921425],[32.859855,39.921601],[32.859809,39.921777],[32.859754,39.921951],[32.85969,39.922123],[32.859618,39.922293],[32.859536,39.922461],[32.859446,39.922626],[32.859348,39.922788],[32.859241,39.922947],[32.859126,39.923103],[32.859003,39.923255],[32.858872,39.923403],[32.858734,39.923547],[32.858589,39.923687],[32.858436,39.923822],[32.858277,39.923952],[32.858111,39.924078],[32.857938,39.924198],[32.85776,39.924313],[32.857575,39.924422],[32.857386,39.924525],[32.857191,39.924623],[32.856991,39.924715],[32.856786,39.9248],[32.856578,39.924879],[32.856365,39.924952],[32.856149,39.925018],[32.855929,39.925077],[32.855707,39.92513],[32.855482,39.925176],[32.855255,39.925214],[32.855026,39.925246],[32.854796,39.925271],[32.854565,39.925289],[32.854333,39.9253],[32.8541,39.925303]]]}}]},{"name":"pharmacies (20)","color":"#e11d48","value":null,"features":[{"type":"Feature","properties":{"name":"Botanica","kind":"pharmacy","distance_m":109.6},"geometry":{"type":"Point","coordinates":[32.854847,39.921602]}},{"type":"Feature","properties":{"name":"Karakoyunlu Eczanesi","kind":"pharmacy","distance_m":241.2},"geometry":{"type":"Point","coordinates":[32.851752,39.919595]}},{"type":"Feature","properties":{"name":"Kumrular Eczanesi","kind":"pharmacy","distance_m":250.9},"geometry":{"type":"Point","coordinates":[32.851578,39.919644]}},{"type":"Feature","properties":{"name":"Yağmur Eczanesi","kind":"pharmacy","distance_m":268.3},"geometry":{"type":"Point","coordinates":[32.851235,39.919814]}},{"type":"Feature","properties":{"name":"Coşkun Eczanesi","kind":"pharmacy","distance_m":278.4},"geometry":{"type":"Point","coordinates":[32.851078,39.919865]}},{"type":"Feature","properties":{"name":"Tepe Eczanesi","kind":"pharmacy","distance_m":284.2},"geometry":{"type":"Point","coordinates":[32.852018,39.922795]}},{"type":"Feature","properties":{"name":"Şener Eczanesi","kind":"pharmacy","distance_m":297},"geometry":{"type":"Point","coordinates":[32.857573,39.920851]}},{"type":"Feature","properties":{"name":"Hatıra Eczanesi","kind":"pharmacy","distance_m":297.9},"geometry":{"type":"Point","coordinates":[32.850778,39.919991]}},{"type":"Feature","properties":{"name":"Uğrak","kind":"pharmacy","distance_m":339.7},"geometry":{"type":"Point","coordinates":[32.857649,39.922176]}},{"type":"Feature","properties":{"name":null,"kind":"pharmacy","distance_m":367.8},"geometry":{"type":"Point","coordinates":[32.856619,39.923485]}},{"type":"Feature","properties":{"name":"Namık Kemal Eczanesi","kind":"pharmacy","distance_m":371},"geometry":{"type":"Point","coordinates":[32.849952,39.921783]}},{"type":"Feature","properties":{"name":"Yeni Yunus Emre Eczanesi","kind":"pharmacy","distance_m":376.3},"geometry":{"type":"Point","coordinates":[32.849855,39.921695]}},{"type":"Feature","properties":{"name":"Bayındır Eczanesi","kind":"pharmacy","distance_m":382.5},"geometry":{"type":"Point","coordinates":[32.85613,39.92387]}},{"type":"Feature","properties":{"name":"Bora Eczanesi","kind":"pharmacy","distance_m":383.5},"geometry":{"type":"Point","coordinates":[32.849713,39.921523]}},{"type":"Feature","properties":{"name":"Varol Eczanesi","kind":"pharmacy","distance_m":392.8},"geometry":{"type":"Point","coordinates":[32.857173,39.91817]}},{"type":"Feature","properties":{"name":"Eceser Eczanesi","kind":"pharmacy","distance_m":397.6},"geometry":{"type":"Point","coordinates":[32.856007,39.924066]}},{"type":"Feature","properties":{"name":"Fazilet Eczanesi","kind":"pharmacy","distance_m":401.7},"geometry":{"type":"Point","coordinates":[32.858743,39.921354]}},{"type":"Feature","properties":{"name":"Büyük Ünal Eczanesi","kind":"pharmacy","distance_m":403.9},"geometry":{"type":"Point","coordinates":[32.857441,39.923372]}},{"type":"Feature","properties":{"name":"Durum Eczanesi","kind":"pharmacy","distance_m":478.9},"geometry":{"type":"Point","coordinates":[32.850463,39.92408]}},{"type":"Feature","properties":{"name":"Sağlık Eczanesi","kind":"pharmacy","distance_m":488.3},"geometry":{"type":"Point","coordinates":[32.856672,39.924727]}}]}];
+const map = L.map('map');
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+  {maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
+function popup(props){
+  const t = document.createElement('table');
+  Object.entries(props || {}).slice(0, 30).forEach(([k, v]) => {
+    const r = t.insertRow(); r.insertCell().textContent = k; r.insertCell().textContent = (v === null ? '' : String(v));
+  });
+  return t;
+}
+const overlays = {}; let bounds = null;
+LAYERS.forEach(l => {
+  let lo = Infinity, hi = -Infinity;
+  if (l.value) l.features.forEach(f => { const v = f.properties && f.properties[l.value]; if (typeof v === 'number') { lo = Math.min(lo, v); hi = Math.max(hi, v); } });
+  const ramp = ['#ffffcc', '#ffeda0', '#fed976', '#feb24c', '#fd8d3c', '#fc4e2a', '#e31a1c', '#b10026'];
+  const fillFor = f => {
+    const v = l.value && f.properties ? f.properties[l.value] : null;
+    if (typeof v !== 'number' || !isFinite(lo)) return l.color;
+    return ramp[Math.min(ramp.length - 1, Math.floor((v - lo) / ((hi - lo) || 1) * ramp.length))];
+  };
+  const style = f => ({color: l.value ? '#555' : l.color, weight: l.value ? 1 : 2, fillColor: fillFor(f), fillOpacity: l.value ? 0.75 : 0.3});
+  const gj = L.geoJSON({type: 'FeatureCollection', features: l.features}, {
+    style: style,
+    pointToLayer: (f, ll) => L.circleMarker(ll, {radius: 6, color: '#fff', weight: 1.5, fillColor: fillFor(f), fillOpacity: 0.95}),
+    onEachFeature: (f, lyr) => { if (f.properties && Object.keys(f.properties).length) lyr.bindPopup(() => popup(f.properties), {maxHeight: 260}); }
+  }).addTo(map);
+  overlays[l.name + ' (' + l.features.length + ')'] = gj;
+  const b = gj.getBounds(); if (b.isValid()) bounds = bounds ? bounds.extend(b) : b;
+});
+if (LAYERS.length > 1) L.control.layers(null, overlays, {collapsed: false}).addTo(map);
+if (bounds) map.fitBounds(bounds.pad(0.08)); else map.setView([0, 0], 2);
+</script></body></html>

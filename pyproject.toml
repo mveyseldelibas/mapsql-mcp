@@ -1,0 +1,62 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mapsql-mcp"
+version = "0.2.0"
+description = "Safe, spatial-aware MCP server for PostGIS and Oracle Spatial: let AI assistants query your geodata and answer with maps."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+authors = [{ name = "Mehmet Veysel Delibaş" }]
+keywords = ["mcp", "model-context-protocol", "postgis", "postgresql", "oracle", "oracle-spatial", "sdo_geometry", "gis", "geospatial", "llm", "claude", "cursor", "maps", "geojson"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Scientific/Engineering :: GIS",
+  "Topic :: Database",
+]
+dependencies = [
+  "mcp>=1.12,<3",
+  "psycopg[binary]>=3.1",
+  "psycopg-pool>=3.2",
+  "pglast>=7.0",
+  "shapely>=2.0",
+  "matplotlib>=3.7",
+  "pillow>=10.0",
+  "httpx>=0.27",
+  "anyio>=4.0",
+  "numpy>=1.24",
+]
+
+[project.optional-dependencies]
+# Oracle Spatial backend: python-oracledb (thin mode, no Oracle Client needed) + sqlglot (Oracle SQL guard)
+oracle = ["oracledb>=2.5", "sqlglot>=30"]
+dev = ["pytest>=8", "pytest-asyncio>=0.23"]
+
+[project.scripts]
+mapsql-mcp = "mapsql_mcp.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/mveyseldelibas/mapsql-mcp"
+Issues = "https://github.com/mveyseldelibas/mapsql-mcp/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/mapsql_mcp"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+markers = [
+  "db: needs a PostGIS database (MAPSQL_TEST_DATABASE_URL)",
+  "oracle: needs an Oracle Spatial demo schema (oracle-test.ini or MAPSQL_TEST_ORACLE_URL)",
+]
