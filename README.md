@@ -19,8 +19,9 @@
 > `within_distance` (geodesic metres, whatever the table's SRID), then `render_map`. The picture above is the
 > literal output of those two tool calls on the bundled demo database.
 
-<!-- TODO: replace with a screen recording of Claude Desktop answering the question above -->
-<!-- ![demo gif](docs/images/demo.gif) -->
+![mapsql-mcp demo: question, tool calls, map](docs/images/demo.gif)
+
+*The GIF is built by `scripts/make_demo_video.py` from real tool outputs on the demo databases (PostGIS and Oracle).*
 
 **Türkçe:** [kullanım kılavuzu aşağıda](#türkçe) · **Who is it for / step-by-step:** [Usage](#usage-step-by-step)
 
