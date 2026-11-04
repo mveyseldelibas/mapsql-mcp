@@ -105,7 +105,7 @@ def test_friendly_errors_never_echo_connection_details() -> None:
     s.register_secrets()
     try:
         oracledb.connect(user="u", password="Sup3rS3cret", dsn="tcps://db.invalid.example:1522/svc", tcp_connect_timeout=1)
-    except oracledb.Error as e:
+    except (oracledb.Error, OSError) as e:  # Linux thin mode raises socket.gaierror directly
         msg = str(friendly_oracle_error(e))
         assert "Sup3rS3cret" not in msg and "db.invalid.example" not in msg
         assert msg.startswith("Could not talk to the database")

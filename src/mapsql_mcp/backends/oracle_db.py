@@ -142,6 +142,9 @@ def friendly_oracle_error(e: BaseException, timeout_ms: int | None = None) -> Ma
         if code in _CONNECT_CODES or isinstance(e, (oracledb.OperationalError, oracledb.InterfaceError)) and not code.startswith("ORA-"):
             return MapsqlError(f"Could not talk to the database: {short[:200]}")
         return MapsqlError(f"Database error: {short}")
+    if isinstance(e, OSError):
+        # thin mode can surface DNS / socket failures as plain OSError (e.g. socket.gaierror on Linux)
+        return MapsqlError(redact(f"Could not talk to the database: {type(e).__name__}: {e.strerror or e}")[:300])
     return MapsqlError(redact(f"{type(e).__name__}: {e}")[:400])
 
 
@@ -196,7 +199,7 @@ class OracleDatabase:
                             getmode=oracledb.POOL_GETMODE_TIMEDWAIT, wait_timeout=15000,
                             timeout=120, tcp_connect_timeout=10.0, **kw,
                         )
-                    except oracledb.Error as e:
+                    except (oracledb.Error, OSError) as e:
                         raise friendly_oracle_error(e) from None
         return self._pool
 
@@ -226,7 +229,7 @@ class OracleDatabase:
         pool = self._get_pool()
         try:
             conn = pool.acquire()
-        except oracledb.Error as e:
+        except (oracledb.Error, OSError) as e:
             raise friendly_oracle_error(e, timeout) from None
         try:
             conn.call_timeout = timeout
