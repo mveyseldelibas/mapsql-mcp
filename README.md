@@ -1,5 +1,7 @@
 # mapsql-mcp
 
+<!-- mcp-name: io.github.mveyseldelibas/mapsql-mcp -->
+
 **Ask your PostGIS or Oracle Spatial database questions in plain English and get the answer back as a map.**
 
 `mapsql-mcp` is a [Model Context Protocol](https://modelcontextprotocol.io) server that lets AI assistants
@@ -13,13 +15,13 @@
 ![PostGIS](https://img.shields.io/badge/PostGIS-supported-336791)
 ![Oracle Spatial](https://img.shields.io/badge/Oracle%20Spatial-supported-c74634)
 
-![Pharmacies within 500 m of Kizilay](docs/images/pharmacies_near_kizilay.png)
+![Pharmacies within 500 m of Kizilay](https://raw.githubusercontent.com/mveyseldelibas/mapsql-mcp/main/docs/images/pharmacies_near_kizilay.png)
 
 > *"Which pharmacies are within 500 m of Kızılay square?"* - the model discovers the layers, calls
 > `within_distance` (geodesic metres, whatever the table's SRID), then `render_map`. The picture above is the
 > literal output of those two tool calls on the bundled demo database.
 
-![mapsql-mcp demo: question, tool calls, map](docs/images/demo.gif)
+![mapsql-mcp demo: question, tool calls, map](https://raw.githubusercontent.com/mveyseldelibas/mapsql-mcp/main/docs/images/demo.gif)
 
 *The GIF is built by `scripts/make_demo_video.py` from real tool outputs on the demo databases (PostGIS and Oracle).*
 
@@ -59,8 +61,6 @@ pip install "mapsql-mcp[oracle]"
 export DATABASE_URL="oracle://MAPSQL_RO:secret@dbhost:1521/ORCLPDB1"
 mapsql-mcp --check
 ```
-
-> v0.2 is not on PyPI yet: install from a clone with `pip install -e .` (or `pip install -e ".[oracle]"`).
 
 ### Claude Desktop
 
@@ -135,11 +135,10 @@ reverse proxy / tunnel. If you installed from a clone use `"command": "python", 
 Claude Desktop, Cursor, VS Code + Copilot) and have spatial data in PostGIS or Oracle Spatial. It is a building block for
 an assistant, not an end-user app: there is no web UI of its own, the chat window *is* the UI.
 
-**1. Install** (from a clone until the PyPI release):
+**1. Install:**
 
 ```bash
-git clone https://github.com/mveyseldelibas/mapsql-mcp && cd mapsql-mcp
-python -m venv .venv && .venv/bin/pip install -e ".[oracle]"     # Windows: .venv\Scripts\pip
+pipx install "mapsql-mcp[oracle]"     # or: pip install "mapsql-mcp[oracle]"
 ```
 
 **2. Point it at a database with a read-only user** and check the connection:
@@ -194,7 +193,7 @@ Then ask your assistant, for example:
 
 | Cafes per neighbourhood (`spatial_join` + choropleth) | 5 nearest hospitals (`nearest`) |
 |---|---|
-| ![cafes](docs/images/cafes_per_neighbourhood.png) | ![hospitals](docs/images/nearest_hospitals.png) |
+| ![cafes](https://raw.githubusercontent.com/mveyseldelibas/mapsql-mcp/main/docs/images/cafes_per_neighbourhood.png) | ![hospitals](https://raw.githubusercontent.com/mveyseldelibas/mapsql-mcp/main/docs/images/nearest_hospitals.png) |
 
 *Map data © OpenStreetMap contributors (ODbL).* Interactive versions of two of them: `docs/images/*.html` (open in a browser).
 
@@ -203,7 +202,7 @@ Then ask your assistant, for example:
 New in v0.2: the same tools, the same safety model and the same maps on **Oracle Database with Spatial** (19c, 21c, 23ai /
 26ai, Autonomous Database, ...), through `python-oracledb` in *thin* mode (no Oracle Client libraries needed).
 
-![Pharmacies within 500 m of Kizilay, Oracle Spatial](docs/images/oracle_pharmacies_near_kizilay.png)
+![Pharmacies within 500 m of Kizilay, Oracle Spatial](https://raw.githubusercontent.com/mveyseldelibas/mapsql-mcp/main/docs/images/oracle_pharmacies_near_kizilay.png)
 
 *Same question, same answer (20 pharmacies) as on PostGIS - this time from `SDO_WITHIN_DISTANCE(... 'distance=500 unit=M')`
 on an Autonomous Database. Map data (c) OpenStreetMap contributors (ODbL).*
@@ -305,7 +304,7 @@ python scripts/make_oracle_demo_maps.py --ini oracle-test.ini     # the maps in 
 
 | Cafes per neighbourhood (`spatial_join` + choropleth) | Projected layer: TUREF TM30, SRID 5254 |
 |---|---|
-| ![cafes](docs/images/oracle_cafes_per_neighbourhood.png) | ![tm30](docs/images/oracle_tm30_pharmacies.png) |
+| ![cafes](https://raw.githubusercontent.com/mveyseldelibas/mapsql-mcp/main/docs/images/oracle_cafes_per_neighbourhood.png) | ![tm30](https://raw.githubusercontent.com/mveyseldelibas/mapsql-mcp/main/docs/images/oracle_tm30_pharmacies.png) |
 
 ### How the tools map to Oracle Spatial
 
@@ -495,11 +494,10 @@ Son kullanıcı uygulaması değildir; kendi ekranı yoktur, arayüzü sohbet pe
 
 ### Adım adım kullanım
 
-**1. Kurulum** (PyPI sürümüne kadar depodan):
+**1. Kurulum:**
 
 ```bash
-git clone https://github.com/mveyseldelibas/mapsql-mcp && cd mapsql-mcp
-python -m venv .venv && .venv/bin/pip install -e ".[oracle]"     # Windows: .venv\Scripts\pip
+pipx install "mapsql-mcp[oracle]"     # ya da: pip install "mapsql-mcp[oracle]"
 ```
 
 **2. Veritabanını salt okunur bir kullanıcıyla bağlayın** ve bağlantıyı deneyin:
