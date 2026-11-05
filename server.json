@@ -1,0 +1,30 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.mveyseldelibas/mapsql-mcp",
+  "title": "mapsql-mcp",
+  "description": "Safe MCP server for PostGIS and Oracle Spatial: query geodata and answer with maps.",
+  "repository": {
+    "url": "https://github.com/mveyseldelibas/mapsql-mcp",
+    "source": "github"
+  },
+  "version": "0.2.0",
+  "packages": [
+    {
+      "registryType": "pypi",
+      "identifier": "mapsql-mcp",
+      "version": "0.2.0",
+      "runtimeHint": "uvx",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "DATABASE_URL",
+          "description": "Connection string, e.g. postgresql://readonly:secret@host:5432/gis. Use a read-only user.",
+          "isRequired": true,
+          "isSecret": true
+        }
+      ]
+    }
+  ]
+}
