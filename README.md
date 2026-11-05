@@ -8,6 +8,8 @@
 (Claude Desktop, Claude Code, Cursor, and any other MCP client) explore, query and analyse a **PostGIS** or an
 **Oracle Spatial** (`SDO_GEOMETRY`) database *safely* and answer with **maps rendered right in the chat**.
 
+[![PyPI](https://img.shields.io/pypi/v/mapsql-mcp)](https://pypi.org/project/mapsql-mcp/)
+[![mapsql-mcp MCP server](https://glama.ai/mcp/servers/mveyseldelibas/mapsql-mcp/badges/score.svg)](https://glama.ai/mcp/servers/mveyseldelibas/mapsql-mcp)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 ![Python](https://img.shields.io/badge/python-3.10%2B-blue)
 ![MCP](https://img.shields.io/badge/MCP-server-purple)
